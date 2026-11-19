@@ -1,0 +1,36 @@
+paths:
+  raw_run: data/raw/run.csv
+  clean_run: data/clean/run_clean.csv
+  track: data/clean/track_clean.csv
+  car: car.yaml
+  results: results/
+
+prep:
+  resample_step_s: 1.0
+  elevation_smoothing_window: 5
+  max_speed_kmh: 60        # values above this are treated as errors
+  interpolate_max_gap_s: 5
+
+columns:
+  time: time_s
+  speed: speed_kmh
+  elevation: elevation_m
+  fuel: fuel_ml
+
+model:
+  step_m: 1.0
+  min_speed_ms: 0.5        # avoids division by zero at standstill
+  air_temp_c: 15
+  air_pressure_kpa: 101.3
+  headwind_ms: 0.0
+
+calibration:
+  parameters: [CdA_m2, Crr]
+  bounds:
+    CdA_m2: [0.01, 0.10]
+    Crr: [0.0005, 0.01]
+  target_error_pct: 5
+
+optimizer:
+  speed_min_ms: 4
+  speed_max_ms: 9
