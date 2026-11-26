@@ -54,3 +54,13 @@ python Source\prep.py
 - Branches: `main` plus short-lived branches named `type/short-description` (`feature/`, `fix/`, `docs/`, `chore/`).
 - No direct commits to `main` after the initial skeleton; use pull requests.
 - Do not commit `.venv/` or large raw logs.
+
+## Data format
+
+Raw logs come from the `utsm_wifi_telemetry` firmware.
+
+- Line 1 is a `#` metadata line; line 2 is the column header; a `# RUN START` line precedes the data.
+- Read with `pd.read_csv(path, comment="#")`.
+- Rows are ~10 Hz with irregular timestamps (`Millis`).
+- Speed, position, and altitude update at 1 Hz and repeat between updates.
+- Raw files keep the logger's column names. Clean files use the names in `config.yaml`.
